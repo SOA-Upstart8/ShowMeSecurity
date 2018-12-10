@@ -10,7 +10,7 @@ Sequel.migration do
       Integer     :favorite_count
       Integer     :retweet_count
       DateTime    :time
-      Integer     :owner_id
+      String      :owner_id
       String      :owner_image
       String      :owner_name
       String      :owner_page
