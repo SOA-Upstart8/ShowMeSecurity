@@ -15,7 +15,7 @@
                   a.btn.btn-primary[href="#{cve.link}" target="_blank"]
                     | Read More →
                   
-                  form role="form" action="cve_favorite" method='POST' id='show-favorite'
+                  form role="form" action="cve_favorite" method='POST' id='show-favorite' style="display: inline-block; margin-left: 10px;"
                           input.form-control[type="hidden" name="favorite" value="#{cve.cve_id}"]
                             button.btn.btn-danger[type="submit"]
                               i.fas.fa-heart
