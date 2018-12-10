@@ -13,7 +13,7 @@ module SMS
       attribute :reply_count, Strict::Integer
       attribute :favorite_count, Strict::Integer
       attribute :retweet_count, Strict::Integer
-      attribute :owner_id, Coercible::Integer
+      attribute :owner_id, Coercible::String
       attribute :owner_image, Strict::String
       attribute :owner_name, Strict::String
       attribute :owner_page, Strict::String

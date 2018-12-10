@@ -38,13 +38,13 @@ module SMS
         return nil unless db_record
 
         Entity::News.new(
-          id:         db_record.id,
-          source:     db_record.source,
-          title:      db_record.title,
-          url:        db_record.url,
-          image:      db_record.image,
-          time:       db_record.time,
-          content:    db_record.content
+          id: db_record.id,
+          source: db_record.source,
+          title: db_record.title,
+          url: db_record.url,
+          image: db_record.image,
+          time: db_record.time,
+          content: db_record.content
         )
       end
 
