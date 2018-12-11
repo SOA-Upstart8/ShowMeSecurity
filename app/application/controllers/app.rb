@@ -20,12 +20,15 @@ module SMS
       routing.root do
         session[:favorite] ||= []
 
-        latest_cve = CVE::CVEMapper.new(App.config.SEC_API_KEY).latest
-        latest_cve.each do |cve|
-          Repository::For.entity(cve).create(cve)
+        result = Service::CVEList.new.call
+
+        if result.failure?
+          flash[:error] = result.failure
+        else
+          cves = result.value!.cves
         end
 
-        viewable_cves = Views::CVEsList.new(latest_cve)
+        viewable_cves = Views::CVEsList.new(cves)
 
         view 'home', locals: { latest: viewable_cves }
       end
@@ -47,17 +50,16 @@ module SMS
         routing.on String do |query|
           # GET /cve/query
           routing.get do
-            begin
-              cve_result = CVE::CVEMapper.new(App.config.SEC_API_KEY).search(query)
-            rescue StandardError
+            result = Service::CVESearch.new.call(query)
+
+            if result.failure?
               flash[:error] = 'We can\'t find any content :<'
               routing.redirect '/'
-            end
-            cve_result.each do |cve|
-              Repository::For.entity(cve).create(cve)
+            else
+              cves = result.value!.cves
             end
 
-            viewable_cves = Views::CVEsList.new(cve_result)
+            viewable_cves = Views::CVEsList.new(cves)
 
             view 'cve', locals: { cve: viewable_cves, search: query }
           end
@@ -77,12 +79,15 @@ module SMS
         routing.on String do |query|
           # GET /cve_category/query
           routing.get do
-            cve_result = Mapper::CVEMapper.new(query).filter
-            cve_result.each do |cve|
-              Repository::For.entity(cve).create(cve)
+            result = Service::CVEOwasp.new.call(query)
+
+            if result.failure?
+              flash[:error] = result.failure
+            else
+              cves = result.value!.cves
             end
 
-            viewable_cves = Views::CVEsList.new(cve_result)
+            viewable_cves = Views::CVEsList.new(cves)
 
             view 'cve_category', locals: { cve: viewable_cves, category: query }
           end

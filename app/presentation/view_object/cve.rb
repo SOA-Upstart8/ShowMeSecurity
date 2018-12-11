@@ -32,8 +32,7 @@ module Views
     end
 
     def date
-        @cve.release_date
+      @cve.release_date
     end
-
   end
 end
