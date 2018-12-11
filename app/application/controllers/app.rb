@@ -11,7 +11,6 @@ module SMS
     plugin :assets, css: 'style.css', path: 'app/presentation/assets'
     plugin :halt
     plugin :flash
-    plugin :caching
 
     # load css
     route do |routing|
@@ -30,7 +29,7 @@ module SMS
         end
 
         viewable_cves = Views::CVEsList.new(cves)
-        response.expires 60, public: true
+
         view 'home', locals: { latest: viewable_cves }
       end
 
