@@ -121,6 +121,30 @@ module SMS
           end
         end
       end
+
+      routing.on 'cve_analysis' do
+        routing.get do
+          # Get cve analysis by month from  analysis/month API
+          result = Service::CVEAnalysis.new.call
+
+          if result.failure?
+            flash[:error] = result.failure
+            routing.redirect '/'
+          end
+          datas = result.value!.months
+
+          date_arr = []
+          num_arr = []
+          datas.each do |data|
+            date_arr << data.date
+          end
+          datas.each do |data|
+            num_arr << data.number
+          end
+
+          view 'cve_analysis', locals: { date_arr: date_arr, num_arr: num_arr }
+        end
+      end
     end
   end
 end
