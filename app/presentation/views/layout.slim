@@ -33,6 +33,15 @@ html[lang="en"]
                   span.input-group-btn
                     button.btn.btn-secondary[type="submit" id="query_submit"]
                       | Go!
+          
+          .card.my-4
+            .card-body
+              center
+                form role="form" action="/cve_analysis" method='GET' id='show-analysis-form'
+                  button.btn.btn-link[type="submit" id="query_submit"]
+                    <i class="far fa-chart-bar"></i> &nbsp;
+                      | Deep analysis
+
           .card.my-4
             h5.card-header
               | OWASP Top 10
