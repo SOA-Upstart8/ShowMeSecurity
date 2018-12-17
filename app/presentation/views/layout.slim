@@ -33,6 +33,15 @@ html[lang="en"]
                   span.input-group-btn
                     button.btn.btn-secondary[type="submit" id="query_submit"]
                       | Go!
+          
+          .card.my-4
+            .card-body
+              center
+                form role="form" action="/cve_analysis" method='GET' id='show-analysis-form'
+                  button.btn.btn-link[type="submit" id="query_submit"]
+                    <i class="far fa-chart-bar"></i> &nbsp;
+                      | Deep analysis
+
           .card.my-4
             h5.card-header
               | OWASP Top 10
@@ -96,6 +105,11 @@ html[lang="en"]
               | Side Widget
             .card-body
               |  You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers! 
+    style
+      | html{ scroll-behavior: smooth; } .gotopbtn { position: fixed; width: 50px; height: 50px; background: #95a5a6; bottom: 40px; right: 50px; text-decoration: none; text-align: center; line-height: 50px; color: white; font-size: 22px; }
+    a.gotopbtn[href="#"]
+      <i class="fas fa-arrow-up"></i>
+    
     footer.py-5.bg-dark
       .container
         p.m-0.text-center.text-white

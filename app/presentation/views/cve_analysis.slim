@@ -1,0 +1,12 @@
+script[src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"]
+
+.col-md-8
+            h1.my-4 id='main_header'
+              | Show Me Security
+
+            h4.my-4
+              | CVE Analysis
+            canvas#bar-chart[width="800" height="450"]
+            
+            script
+              | new Chart(document.getElementById("bar-chart"), { type: 'bar', data: { labels: ["#{date_arr[0]}", "#{date_arr[1]}", "#{date_arr[2]}", "#{date_arr[3]}", "#{date_arr[4]}", "#{date_arr[5]}", "#{date_arr[6]}", "#{date_arr[7]}", "#{date_arr[8]}", "#{date_arr[9]}", "#{date_arr[10]}", "#{date_arr[11]}"], datasets: [ { label: "Numbers of CVE", backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#3e95cd"], data: [#{num_arr[0]},#{num_arr[1]},#{num_arr[2]},#{num_arr[3]},#{num_arr[4]},#{num_arr[5]},#{num_arr[6]},#{num_arr[7]},#{num_arr[8]},#{num_arr[9]},#{num_arr[10]},#{num_arr[11]}] } ] }, options: { legend: { display: false }, title: { display: true, text: 'The number of CVE in every month' } } });
