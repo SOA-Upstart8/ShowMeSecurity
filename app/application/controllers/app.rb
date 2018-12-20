@@ -81,13 +81,13 @@ module SMS
           routing.get do
             result = Service::CVEOwasp.new.call(query)
 
-            if result.failure?
+            if result.failure
               flash[:error] = result.failure
+              routing.redirect('/')
             else
-              cves = result.value!.cves
+              cves = result.value!.owasps
+              viewable_cves = Views::CVEsList.new(cves)
             end
-
-            viewable_cves = Views::CVEsList.new(cves)
 
             view 'cve_category', locals: { cve: viewable_cves, category: query }
           end

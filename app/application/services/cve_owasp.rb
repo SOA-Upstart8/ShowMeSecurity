@@ -8,7 +8,7 @@ module SMS
     class CVEOwasp
       include Dry::Transaction
 
-      step :get_cves
+      step :retrieve_cves
       step :return_cves
 
       private
@@ -16,18 +16,20 @@ module SMS
       SMS_NOT_FOUND_MSG = 'Could not find cves on Secbuzzer'
 
       # call owasp_cve API
-      def get_cves(input)
-        Gateway::Api.new(SMS::App.config)
+      def retrieve_cves(input)
+        result = Gateway::Api.new(SMS::App.config)
           .owasp_cve(input)
-          .yield_self do |result|
-            result.success? ? Success(result.payload) : Failure(result.message)
-          end
-      rescue StandardError
-        Failure('Cannot search the cve categories.')
+        if result.code == 202
+          Failure(result.parse['message'])
+        else
+          result.success? ? Success(result.payload) : Failure(result.message)
+        end
+      rescue StandardError => e
+        Failure(e.to_s)
       end
 
       def return_cves(input)
-        Representer::CVEsList.new(OpenStruct.new).from_json(input)
+        Representer::OwaspsList.new(OpenStruct.new).from_json(input)
           .yield_self { |cves| Success(cves) }
       end
     end
