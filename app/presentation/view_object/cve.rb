@@ -28,7 +28,7 @@ module Views
     end
 
     def link
-      @cve.references[0].link
+      @cve.references.length.zero? ? './' : @cve.references[0].link
     end
 
     def date
