@@ -3,7 +3,7 @@
 require 'roar/decorator'
 require 'roar/json'
 
-require_relative 'cve_representer'
+require_relative 'owasp_representer'
 require_relative 'references_representer.rb'
 
 module SMS
