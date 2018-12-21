@@ -80,15 +80,19 @@ module SMS
           # GET /cve_category/query
           routing.get do
             result = Service::CVEOwasp.new.call(query)
-
             if result.failure
               flash[:error] = result.failure
               routing.redirect('/')
+            end
+            check_class = result.value!.class.to_s
+            if check_class == 'Hash'
+              result = OpenStruct.new(result.value!)
+              flash.now[:notic] = 'We are filtering datas, pleas wait' if result.status == 'processing'
             else
               cves = result.value!.owasps
               viewable_cves = Views::CVEsList.new(cves)
             end
-
+            # # #
             view 'cve_category', locals: { cve: viewable_cves, category: query }
           end
         end

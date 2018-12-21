@@ -19,17 +19,16 @@ module SMS
       def retrieve_cves(input)
         result = Gateway::Api.new(SMS::App.config)
           .owasp_cve(input)
-        if result.code == 202
-          Failure(result.parse['message'])
-        else
-          result.success? ? Success(result.payload) : Failure(result.message)
-        end
+        result.success? ? Success(result) : Failure(response.message)
       rescue StandardError => e
         Failure(e.to_s)
       end
 
       def return_cves(input)
-        Representer::OwaspsList.new(OpenStruct.new).from_json(input)
+        check = JSON.parse input
+        return Success(check) if check['status'] == 'processing'
+
+        Representer::OwaspsList.new(OpenStruct.new).from_json(input.payload)
           .yield_self { |cves| Success(cves) }
       end
     end

@@ -2,7 +2,7 @@
 
 development:
   DB_FILENAME: app/infrastructure/database/local/dev.db
-  API_HOST: https://showme-api.herokuapp.com
+  API_HOST: http://localhost:9292
 
 test:
   DB_FILENAME: app/infrastructure/database/local/dev.db
@@ -10,7 +10,7 @@ test:
 
 app_test:
   DB_FILENAME: app/infrastructure/database/local/dev.db
-  API_HOST: http://localhost:9000
+  API_HOST: http://localhost:9292
  
 
 production:
