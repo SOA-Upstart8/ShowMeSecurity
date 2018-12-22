@@ -84,16 +84,20 @@ module SMS
               flash[:error] = result.failure
               routing.redirect('/')
             end
+
             check_class = result.value!.class.to_s
             if check_class == 'Hash'
               result = OpenStruct.new(result.value!)
               flash.now[:notic] = 'We are filtering datas, pleas wait' if result.status == 'processing'
+              processing = Views::Processing.new(
+                App.config, result
+              )
+              view 'cve_processing', locals: { processing: processing, category: query }
             else
               cves = result.value!.owasps
               viewable_cves = Views::CVEsList.new(cves)
+              view 'cve_category', locals: { cve: viewable_cves, category: query }
             end
-            # # #
-            view 'cve_category', locals: { cve: viewable_cves, category: query }
           end
         end
       end

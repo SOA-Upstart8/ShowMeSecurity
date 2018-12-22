@@ -19,7 +19,7 @@ module SMS
       def retrieve_cves(input)
         result = Gateway::Api.new(SMS::App.config)
           .owasp_cve(input)
-        result.success? ? Success(result) : Failure(response.message)
+        result.success? ? Success(result) : Failure(result.message)
       rescue StandardError => e
         Failure(e.to_s)
       end
