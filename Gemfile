@@ -21,6 +21,10 @@ gem 'dry-monads'
 gem 'dry-transaction'
 gem 'dry-validation'
 
+# Representers
+gem 'multi_json'
+gem 'roar'
+
 # DOMAIN LAYER
 gem 'dry-struct', '~> 0.5'
 gem 'dry-types', '~> 0.5'
