@@ -92,7 +92,7 @@ module SMS
               processing = Views::Processing.new(
                 App.config, result
               )
-              view 'cve_processing', locals: { processing: processing, category: query }
+              view 'cve_processing', locals: { processing: processing }
             else
               cves = result.value!.owasps
               viewable_cves = Views::CVEsList.new(cves)
