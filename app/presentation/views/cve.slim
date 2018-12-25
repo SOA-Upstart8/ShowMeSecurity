@@ -1,23 +1,47 @@
 - if cve.any?
   .col-md-8
-            h1.my-4 id='main_header'
+            h1.my-4[style="font-family: 'Acme', sans-serif;"]
+              <i class="fas fa-shield-alt"></i>&nbsp;&nbsp;
               | Show Me Security
-
-            h4.my-4
-              | CVE Results for #{search}
-            - cve.each do |cve|
+            script[src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"]
+            
+            h4.my-4[style="font-family: 'Acme', sans-serif;"]
+              | CVE Results for #{search} &nbsp;
+              <i class="fas fa-search"></i>
+            input#hightlightText.form-control[type="hidden" value="#{search}"]
+            style
+              | .f-red{ color: red; font-weight: bold; } 
+            
+            - cve.each_with_index do |cve, index|
               .card.mb-4
                 .card-body
-                  h2.card-title
+                  h2.card-title[style="font-family: 'Acme', sans-serif;"]
                     = cve.cve_id
-                  p.card-text
-                    = cve.overview
-                  a.btn.btn-primary[href="#{cve.link}" target="_blank"]
+                  
+                  p#first.card-text
+                  javascript:
+                    document.getElementById('first').id = "#{index}"
+                  javascript:
+                      var htmlText = "#{cve.overview}"
+                      $("##{index}").html(htmlText);
+                      var hightlightText = $("#hightlightText").val()
+                      $.fn.highlight = function(what,spanClass) {
+                          return this.each(function(){
+                              var container = this,
+                                  content = container.innerHTML,
+                                  pattern = new RegExp('([<.]*)(' + what + ')([<.]*)','gi'),
+                                  replaceWith = '$1<span ' + ( spanClass ? 'class="' + spanClass + '"' : '' ) + '">$2</span>$3', highlighted = content.replace(pattern,replaceWith);
+                              container.innerHTML = highlighted;
+                          });
+                      }
+                      $("##{index}").highlight(hightlightText,'f-red');
+                     
+                  a.btn.btn-primary[style="font-family: 'Acme', sans-serif;" href="#{cve.link}" target="_blank"]
                     | Read More →
                   
                   form role="form" action="cve_favorite" method='POST' id='show-favorite' style="display: inline-block; margin-left: 10px;"
                           input.form-control[type="hidden" name="favorite" value="#{cve.cve_id}"]
                             button.btn.btn-danger[type="submit"]
                               i.fas.fa-heart
-                .card-footer.text-muted
-                  |  Released on #{cve.date}
+                .card-footer.text-muted[style="font-family: 'Acme', sans-serif;"]
+                  |  Released on #{cve.date[0,10]}

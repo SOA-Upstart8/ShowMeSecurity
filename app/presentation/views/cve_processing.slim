@@ -1,40 +1,49 @@
-.container
-  - if processing.in_progress?
-    .progress
-    .progress-bar.bg-success.progress-bar-striped.active[
-      role="progressbar" aria-valuenow="10" aria-valuemin="0"
-      aria-valuemax="100" style="width:0%"]
-    script src = "#{processing.ws_javascript}"
+.col-md-8
+            h1.my-4[style="font-family: 'Acme', sans-serif;"]
+              <i class="fas fa-shield-alt"></i>&nbsp;&nbsp;
+              | Show Me Security
+            .container
+              - if processing.in_progress?
+                .progress
+                .progress-bar.bg-success.progress-bar-striped.active[
+                  role="progressbar" aria-valuenow="10" aria-valuemin="0"
+                  aria-valuemax="100" style="width:0%"]
+                script src = "#{processing.ws_javascript}"
 
-    javascript:
-        var channel = "#{processing.ws_channel_id}";
-        var client = new Faye.Client("#{processing.ws_route}");
-        
-        var bar = document.getElementsByClassName("progress-bar")[0];
-        var reg = /\:(\d+)%/
-            
+                style
+                  | .streetcircle { background: url() 0 -5px repeat-x; height: 240px; width: 240px; margin: 50px auto 0; position: relative; overflow: hidden; border-radius: 123px; border: 5px solid white; box-shadow: 0 5px 20px rgba(black, 0.5); animation: wallslide 4s linear infinite; } .hoodie { animation: run-cycle 0.6s steps(6) infinite; background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/15979/running.png) 0 0 no-repeat; height: 160px; width: 112px; position: absolute; bottom: 50px; left: 66px; margin: 0 auto; } @keyframes run-cycle { 0% { background-position: 0 0; } 100% { background-position: -672px 0; } } @keyframes wallslide { 0% { background-position: 0 -5px; } 100% { background-position: -1053px -5px; } }
+                .streetcircle
+                  .hoodie
 
-        client.subscribe('/' + channel, function(message) {
-        // Collect progressbar element and percentage
-        var progress = bar.getAttribute("style")
-        var currentProgress = reg.exec(progress)[1]
-        
-        if (isNaN(message)) {
-          bar.setAttribute("style", "width:100%")
-          bar.setAttribute("class", "progress-bar bg-danger progress-bar-striped")
-          bar.innerHTML = message
-        } else {
-          if (parseInt(message) > parseInt(currentProgress)) {
-            // Set the progress bar and percentage
-            bar.setAttribute("aria-valuenow", message)
-            bar.setAttribute("style", "width:"+message+"%")
-            bar.innerHTML = message+"%"
-            // Reoad page at 100%
-            if (message == "100") {
-              setTimeout(function () {
-                window.location = window.location.href
-              }, 1000);
-            }
-          }
-        }
-      });
+                javascript:
+                    var channel = "#{processing.ws_channel_id}";
+                    var client = new Faye.Client("#{processing.ws_route}");
+                    
+                    var bar = document.getElementsByClassName("progress-bar")[0];
+                    var reg = /\:(\d+)%/
+                        
+
+                    client.subscribe('/' + channel, function(message) {
+                    // Collect progressbar element and percentage
+                    var progress = bar.getAttribute("style")
+                    var currentProgress = reg.exec(progress)[1]
+                    
+                    if (isNaN(message)) {
+                      bar.setAttribute("style", "width:100%")
+                      bar.setAttribute("class", "progress-bar bg-danger progress-bar-striped")
+                      bar.innerHTML = message
+                    } else {
+                      if (parseInt(message) > parseInt(currentProgress)) {
+                        // Set the progress bar and percentage
+                        bar.setAttribute("aria-valuenow", message)
+                        bar.setAttribute("style", "width:"+message+"%")
+                        bar.innerHTML = message+"%"
+                        // Reoad page at 100%
+                        if (message == "100") {
+                          setTimeout(function () {
+                            window.location = window.location.href
+                          }, 1000);
+                        }
+                      }
+                    }
+                  });

@@ -1,23 +1,28 @@
 - if latest.any?
   .col-md-8
-            h1.my-4 id='main_header'
+            h1.my-4[style="font-family: 'Acme', sans-serif;"]
+              <i class="fas fa-shield-alt"></i>&nbsp;&nbsp;
               | Show Me Security
-
-            h4.my-4
-              | latest common vulnerables and exposures
+            
+            style
+              | p.card-text { white-space: nowrap; width: 100%; overflow: hidden; text-overflow: ellipsis; }
+            
+            h4.my-4[style="font-family: 'Acme', sans-serif;"]
+              | latest common vulnerables and exposures &nbsp;
+              <i class="fas fa-search"></i>
             - latest.each do |cve|
               .card.mb-4
                 .card-body
-                  h2.card-title
+                  h2.card-title[style="font-family: 'Acme', sans-serif;"]
                     = cve.cve_id
                   p.card-text
                     = cve.overview
-                  a.btn.btn-primary[href="#{cve.link}" target="_blank"]
+                  a.btn.btn-primary[style="font-family: 'Acme', sans-serif;" href="#{cve.link}" target="_blank"]
                     | Read More →
                   
                   form role="form" action="cve_favorite" method='POST' id='show-favorite' style="display: inline-block; margin-left: 10px;"
                           input.form-control[type="hidden" name="favorite" value="#{cve .cve_id}"]
                             button.btn.btn-danger[type="submit" id="#{cve.cve_id}"]
                               i.fas.fa-heart
-                .card-footer.text-muted
-                  |  Released on #{cve.date}
+                .card-footer.text-muted[style="font-family: 'Acme', sans-serif;"]
+                  |  Released on #{cve.date[0,10]}

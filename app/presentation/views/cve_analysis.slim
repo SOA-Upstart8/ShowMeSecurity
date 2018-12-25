@@ -1,12 +1,138 @@
 script[src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"]
 
 .col-md-8
-            h1.my-4 id='main_header'
+            h1.my-4[style="font-family: 'Acme', sans-serif;"]
+              <i class="fas fa-shield-alt"></i>&nbsp;&nbsp;
               | Show Me Security
 
-            h4.my-4
-              | CVE Analysis
+            h4.my-4[style="font-family: 'Acme', sans-serif;"]
+              | CVE Analysis &nbsp;
+              <i class="fas fa-search"></i>
+            
             canvas#bar-chart[width="800" height="450"]
             
             script
               | new Chart(document.getElementById("bar-chart"), { type: 'bar', data: { labels: ["#{date_arr[0]}", "#{date_arr[1]}", "#{date_arr[2]}", "#{date_arr[3]}", "#{date_arr[4]}", "#{date_arr[5]}", "#{date_arr[6]}", "#{date_arr[7]}", "#{date_arr[8]}", "#{date_arr[9]}", "#{date_arr[10]}", "#{date_arr[11]}"], datasets: [ { label: "Numbers of CVE", backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#3e95cd"], data: [#{num_arr[0]},#{num_arr[1]},#{num_arr[2]},#{num_arr[3]},#{num_arr[4]},#{num_arr[5]},#{num_arr[6]},#{num_arr[7]},#{num_arr[8]},#{num_arr[9]},#{num_arr[10]},#{num_arr[11]}] } ] }, options: { legend: { display: false }, title: { display: true, text: 'The number of CVE in every month' } } });
+            
+            <hr>
+            
+            link[rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"]
+            link[href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"]
+            script[type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"]
+            script[type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"]
+            center.mb-4
+              canvas#doughnutChart
+            
+            javascript:
+              //doughnut
+              var ctxD = document.getElementById("doughnutChart").getContext('2d');
+              var myLineChart = new Chart(ctxD, {
+                type: 'doughnut',
+                data: {
+                  labels: ["#{type_arr[0]}","#{type_arr[1]}","#{type_arr[2]}","#{type_arr[3]}","#{type_arr[4]}","#{type_arr[5]}","#{type_arr[6]}","#{type_arr[7]}","#{type_arr[8]}"],
+                  datasets: [{
+                    data: ["#{type_num_arr[0]}","#{type_num_arr[1]}","#{type_num_arr[2]}","#{type_num_arr[3]}","#{type_num_arr[4]}","#{type_num_arr[5]}","#{type_num_arr[6]}","#{type_num_arr[7]}","#{type_num_arr[8]}"],
+                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#2777f7", "#8750fc", "#83ff30", "#ffdc30"],
+                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774", "#4a8cf7", "#986afc", "#92ff49", "#ffe04c"]
+                  }]
+                },
+                options: {
+                  responsive: true
+                }
+              });
+            
+            <hr>
+
+            table.table.mb-4
+              thead.thead-dark
+                tr
+                  th[scope="col"]
+                    | Top_Price
+                  th[scope="col"]
+                    | CVE_ID
+                  th[scope="col"]
+                    | Type
+                  th[scope="col"]
+                    | Release_Date
+                  th[scope="col"]
+                    | Tweet_Count
+                  th[scope="col"]
+                    | Retweet_Count
+              - topPrice.each do |cve|
+                tbody
+                  tr
+                    th[scope="row"]
+                      = topPrice.index(cve)+1
+                    td
+                      = cve.CVE_ID
+                    td
+                      = cve.type[0]
+                    td
+                      = cve.release_date[0,10]
+                    td
+                      = cve.tweet_count
+                    td
+                      = cve.retweet_count
+            
+            table.table.mb-4
+              thead.thead-light
+                tr
+                  th[scope="col"]
+                    | Top_Popular
+                  th[scope="col"]
+                    | CVE_ID
+                  th[scope="col"]
+                    | Type
+                  th[scope="col"]
+                    | Release_Date
+                  th[scope="col"]
+                    | Tweet_Count
+                  th[scope="col"]
+                    | Retweet_Count
+              - topPopular.each do |cve|
+                tbody
+                  tr
+                    th[scope="row"]
+                      = topPopular.index(cve)+1
+                    td
+                      = cve.CVE_ID
+                    td
+                      = cve.type[0]
+                    td
+                      = cve.release_date[0,10]
+                    td
+                      = cve.tweet_count
+                    td
+                      = cve.retweet_count
+              
+            table.table.mb-4
+              thead.thead-dark
+                tr
+                  th[scope="col"]
+                    | Top_Severity
+                  th[scope="col"]
+                    | CVE_ID
+                  th[scope="col"]
+                    | Type
+                  th[scope="col"]
+                    | Release_Date
+                  th[scope="col"]
+                    | Tweet_Count
+                  th[scope="col"]
+                    | Reweet_Count
+              - topSeverity.each do |cve|
+                tbody
+                  tr
+                    th[scope="row"]
+                      = topSeverity.index(cve)+1
+                    td
+                      = cve.CVE_ID
+                    td
+                      = cve.type[0]
+                    td
+                      = cve.release_date[0,10]
+                    td
+                      = cve.tweet_count
+                    td
+                      = cve.retweet_count
+            

@@ -15,6 +15,13 @@ module Views
       end
     end
 
+    def each_with_index
+      @cves.each_with_index do |cve, i|
+        yield cve, i
+      end
+    end
+
+
     def any?
       @cves.any?
     end

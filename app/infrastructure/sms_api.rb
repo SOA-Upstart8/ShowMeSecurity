@@ -35,6 +35,14 @@ module SMS
         @request.analysis_month
       end
 
+      def top_5
+        @request.top_5
+      end
+
+      def vultype
+        @request.vultype
+      end
+
       # HTTP request transmitter
       class Request
         def initialize(config)
@@ -64,6 +72,14 @@ module SMS
 
         def analysis_month
           call_api('get', %w[analysis month])
+        end
+
+        def top_5
+          call_api('get', ['top_5'])
+        end
+
+        def vultype
+          call_api('get', ['vultype'])
         end
 
         private

@@ -33,6 +33,10 @@ module SMS
         view 'home', locals: { latest: viewable_cves }
       end
 
+      routing.on 'test' do
+        view 'index'
+      end
+
       routing.on 'cve' do
         routing.is do
           # POST /cve/
@@ -149,7 +153,23 @@ module SMS
             num_arr << data.number
           end
 
-          view 'cve_analysis', locals: { date_arr: date_arr, num_arr: num_arr }
+          result2 = Service::CVEAnalysis2.new.call
+          topPrice = result2.value!.cves[0..4]
+          topPopular = result2.value!.cves[5..9]
+          topSeverity = result2.value!.cves[10..14]
+
+          result3 = Service::CVEAnalysis3.new.call
+          types = result3.value!.vultypes[1..10]
+          type_arr = []
+          type_num_arr = []
+          types.each do |vul|
+            type_arr << vul.type
+          end
+          types.each do |vul|
+            type_num_arr << vul.number
+          end
+
+          view 'cve_analysis', locals: {type_arr: type_arr, type_num_arr: type_num_arr, date_arr: date_arr, num_arr: num_arr, topPrice: topPrice, topPopular: topPopular, topSeverity: topSeverity }
         end
       end
     end
