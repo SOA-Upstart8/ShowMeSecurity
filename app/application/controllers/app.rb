@@ -172,6 +172,27 @@ module SMS
           view 'cve_analysis', locals: {type_arr: type_arr, type_num_arr: type_num_arr, date_arr: date_arr, num_arr: num_arr, topPrice: topPrice, topPopular: topPopular, topSeverity: topSeverity }
         end
       end
+
+      routing.on 'cve_detail' do
+        routing.is do
+          # POST /cve_detail/
+          routing.post do
+            cve_id = routing.params['cve_id']
+
+            routing.redirect "cve_detail/#{cve_id}"
+          end
+        end
+
+        routing.on String do |cve_id|
+          # GET /cve_detail/cve_id
+          routing.get do
+            result = Service::CVEDetail.new.call(cve_id)
+            tweets = result.value!.tweets
+
+            view 'cve_detail', locals: { cve_detail: result.value!, tweets: tweets }
+          end
+        end
+      end
     end
   end
 end

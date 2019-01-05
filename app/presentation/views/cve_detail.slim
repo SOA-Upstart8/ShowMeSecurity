@@ -1,0 +1,53 @@
+.col-md-8
+            h1.my-4[style="font-family: 'Acme', sans-serif;"]
+              <i class="fas fa-shield-alt"></i>&nbsp;&nbsp;
+              | Show Me Security
+            script[src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"]
+            
+            h4.my-4[style="font-family: 'Acme', sans-serif;"]
+              | CVE Details &nbsp;
+              <i class="fas fa-search"></i>
+            
+            style
+              | li.list-group-item { white-space: nowrap; width: 100%; overflow: hidden; text-overflow: ellipsis; }
+
+            .card.mb-4
+                .card-body
+                  h2.card-title[style="font-family: 'Acme', sans-serif;"]
+                    = cve_detail.CVE_ID
+                  p.card-text
+                    = cve_detail.overview
+                .card-footer.text-muted[style="font-family: 'Acme', sans-serif;"]
+                  |  Released on #{cve_detail.release_date[0,10]}
+            
+            ul.list-group.list-group[style="font-family: 'Acme', sans-serif;"]
+                li.list-group-item
+                    | Zeroday_Price: &nbsp; #{cve_detail.zeroday_price}
+                li.list-group-item
+                    | Vulnerable_Type: &nbsp; #{cve_detail.vultype}
+                li.list-group-item
+                    | Affected_Product: &nbsp; #{cve_detail.affected_product}
+                li.list-group-item
+                    | Affected_Vendor: &nbsp; #{cve_detail.affected_vendor}
+            
+            br
+            center[style="color: cadetblue; font-family: 'Acme', sans-serif;"]
+                h4
+                    <i class="fab fa-twitter"></i> &nbsp;
+                    | Tweeter
+            .row[style="font-family: 'Acme', sans-serif; margin-bottom: 20px;"]
+                - tweets.each do |tweet|
+                        .col-lg-4
+                            center
+                                img.rounded-circle[style="margin-top: 20px;" src="#{tweet.owner_image}" alt="No User Image" width="140" height="140"]
+                                h2
+                                | #{tweet.owner_name}
+                                p
+                                | #{tweet.content}
+                                p
+                                    .card.card-body
+                                        | Favorite_Count: &nbsp; #{tweet.favorite_count} 
+                                        br
+                                        | Retweet_Count: &nbsp; #{tweet.retweet_count}
+                                        br
+                                        | Time: &nbsp; #{tweet.time[0..10]}

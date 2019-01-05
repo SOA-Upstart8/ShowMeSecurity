@@ -43,6 +43,10 @@ module SMS
         @request.vultype
       end
 
+      def find_cve_detail(cve_id)
+        @request.find_cve_detail(cve_id)
+      end
+
       # HTTP request transmitter
       class Request
         def initialize(config)
@@ -80,6 +84,10 @@ module SMS
 
         def vultype
           call_api('get', ['vultype'])
+        end
+
+        def find_cve_detail(cve_id)
+          call_api('get', ['find_by_id', cve_id])
         end
 
         private
