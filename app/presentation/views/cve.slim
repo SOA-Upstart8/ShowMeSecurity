@@ -2,7 +2,8 @@
   .col-md-8
             h1.my-4[style="font-family: 'Acme', sans-serif;"]
               <i class="fas fa-shield-alt"></i>&nbsp;&nbsp;
-              | Show Me Security
+              a[href="/" style="text-decoration: none; color: rgb(33, 37, 41);"]
+                | Show Me Security
             script[src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"]
             
             h4.my-4[style="font-family: 'Acme', sans-serif;"]
@@ -39,7 +40,7 @@
                   a.btn.btn-primary[style="font-family: 'Acme', sans-serif;" href="#{cve.link}" target="_blank"]
                     | Read More →
                   
-                  form role="form" action="cve_favorite" method='POST' id='show-favorite' style="display: inline-block; margin-left: 10px;"
+                  form role="form" action="/cve_favorite" method='POST' id='show-favorite' style="display: inline-block; margin-left: 10px;"
                           input.form-control[type="hidden" name="favorite" value="#{cve.cve_id}"]
                             button.btn.btn-danger[type="submit"]
                               i.fas.fa-heart

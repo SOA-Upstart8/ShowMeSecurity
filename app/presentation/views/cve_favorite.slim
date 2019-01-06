@@ -1,13 +1,16 @@
 .col-md-8
-          h1.my-4 id='main_header'
-            | Show Me Security
+          h1.my-4[style="font-family: 'Acme', sans-serif;"]
+            <i class="fas fa-shield-alt"></i>&nbsp;&nbsp;
+            a[href="/" style="text-decoration: none; color: rgb(33, 37, 41);"]
+              | Show Me Security
 
-          h4.my-4
-            | Interesting CVEs
+          h4.my-4[style="font-family: 'Acme', sans-serif;"]
+            | Interesting CVEs &nbsp;
+            <i class="fas fa-search"></i>
           - cve.each do |cve|
             .card.mb-4
               .card-body
-                h2.card-title
+                h2.card-title[style="font-family: 'Acme', sans-serif;"]
                   i.fas.fa-star &nbsp
                   = cve
 
