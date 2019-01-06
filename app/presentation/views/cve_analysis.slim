@@ -64,7 +64,8 @@ script[src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"]
                     th[scope="row"]
                       = topPrice.index(cve)+1
                     td
-                      = cve.CVE_ID
+                      a[href="https://showmesecurity.herokuapp.com/cve_detail/#{cve.CVE_ID}"]
+                        = cve.CVE_ID
                     td
                       = cve.type[0]
                     td
@@ -95,7 +96,8 @@ script[src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"]
                     th[scope="row"]
                       = topPopular.index(cve)+1
                     td
-                      = cve.CVE_ID
+                      a[href="https://showmesecurity.herokuapp.com/cve_detail/#{cve.CVE_ID}"]
+                        = cve.CVE_ID
                     td
                       = cve.type[0]
                     td
@@ -126,7 +128,8 @@ script[src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"]
                     th[scope="row"]
                       = topSeverity.index(cve)+1
                     td
-                      = cve.CVE_ID
+                      a[href="https://showmesecurity.herokuapp.com/cve_detail/#{cve.CVE_ID}"]
+                        = cve.CVE_ID
                     td
                       = cve.type[0]
                     td
