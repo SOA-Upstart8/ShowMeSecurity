@@ -113,7 +113,7 @@ module SMS
             cve_id = routing.params['favorite']
             session[:favorite].insert(0, cve_id).uniq!
 
-            routing.redirect "cve_favorite/#{cve_id}"
+            routing.redirect "https://showmesecurity.herokuapp.com/cve_favorite/#{cve_id}"
           end
         end
 
